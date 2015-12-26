@@ -10,6 +10,7 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/HelpFormatter.h>
+#include <Poco/Logger.h>
 
 #include <iostream>
 
@@ -36,6 +37,7 @@ void Server::initialize(Application& self)
 		loadConfiguration(confFile);
 	}
 	ServerApplication::initialize(self);
+	poco_information_f1(logger(), "cwd: %s", Poco::Path::current());
 }
 
 void Server::uninitialize()

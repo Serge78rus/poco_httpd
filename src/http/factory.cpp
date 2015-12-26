@@ -11,9 +11,9 @@
 
 #include "factory.h"
 #include "conf.h"
-#include "handlers/root.h"
 #include "handlers/file.h"
 #include "handlers/error.h"
+#include "handlers/info.h"
 
 using namespace std;
 using namespace http;
@@ -22,7 +22,7 @@ Factory::Factory(Conf &conf)
 		: logger(Poco::Logger::get("http.factory")),
 			reqLogger(Poco::Logger::get("http.req")),
 			resLogger(Poco::Logger::get("http.res")),
-			rootDir(conf.getString("root", "/usr/share/www")),
+			rootDir(conf.getString("root", "wwwroot")),
 			err404page(conf.getString("error404", "")),
 			err500page(conf.getString("error500", "")),
 			err501page(conf.getString("error501", ""))
@@ -49,17 +49,24 @@ Poco::Net::HTTPRequestHandler *Factory::createRequestHandler(
 			}
 		}
 		if (met == "GET") {
-			Poco::Path path(rootDir + uri);
-			//poco_information_f1(logger, "path1: %s", path.toString());
-			if (path.isDirectory() || path.getExtension().empty()) {
-				path = Poco::Path(path, "index.html");
-				//poco_information_f1(logger, "path2: %s", path.toString());
-			}
-			if (Poco::File(path).exists()) {
-				return new FileHandler(path.toString(), mime.getType(path.getExtension()));
+			if (uri == "/info") {
+				return new InfoHandler(reqLogger, resLogger);
+			//else if (uri == ...) {
 			} else {
-				poco_error_f1(logger, "Not found: %s", path.toString());
-				return getErrorHandler(Poco::Net::HTTPServerResponse::HTTP_NOT_FOUND, err404page);
+				Poco::Path path(rootDir + uri);
+				//poco_information_f1(logger, "path1: %s", path.toString());
+				if (path.isDirectory() || path.getExtension().empty()) {
+					path = Poco::Path(path, "index.html");
+					//poco_information_f1(logger, "path2: %s", path.toString());
+				}
+				if (Poco::File(path).exists()) {
+					return new FileHandler(path.toString(),
+							mime.getType(path.getExtension()));
+				} else {
+					poco_error_f1(logger, "Not found: %s", path.toString());
+					return getErrorHandler(Poco::Net::HTTPServerResponse::HTTP_NOT_FOUND,
+							err404page);
+				}
 			}
 		} else {
 			poco_error_f1(logger, "Bad method: %s", met);

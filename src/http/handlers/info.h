@@ -5,24 +5,30 @@
  *      Author: serge78rus
  */
 
-#ifndef H_ROOT_H_
-#define H_ROOT_H_
+#ifndef H_ONFO_H_
+#define H_INFO_H_
 
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Logger.h>
 
 namespace http {
 
-class RootHandler: public Poco::Net::HTTPRequestHandler
+class InfoHandler: public Poco::Net::HTTPRequestHandler
 {
 public:
-	RootHandler(Poco::Logger &reql, Poco::Logger &resl);
+	InfoHandler(Poco::Logger &reql, Poco::Logger &resl);
 	void handleRequest(Poco::Net::HTTPServerRequest& req, Poco::Net::HTTPServerResponse& res);
 private:
 	Poco::Logger &reqLogger;
 	Poco::Logger &resLogger;
 };
 
+inline InfoHandler::InfoHandler(Poco::Logger &reql, Poco::Logger &resl)
+		:	reqLogger(reql),
+			resLogger(resl)
+{
+}
+
 } //namespace http
 
-#endif /* H_ROOT_H_ */
+#endif /* H_INFO_H_ */

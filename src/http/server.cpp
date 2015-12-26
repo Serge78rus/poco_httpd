@@ -10,7 +10,6 @@
 #include <Poco/ThreadPool.h>
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/ServerSocket.h>
-#include <Poco/LogStream.h>
 
 #include <iostream>
 
@@ -36,16 +35,17 @@ void Server::initialize(Poco::Util::Application& app)
 	poco_trace(logger, "Server::initialize()");
 
 	Conf conf(app.config());
-	unsigned short port = (unsigned short)conf.getInt("port", 9980);
+	unsigned short port = (unsigned short)conf.getInt("port", 8888);
 	int maxQueued  = conf.getInt("maxQueued", 100);
 	int maxThreads = conf.getInt("maxThreads", 16);
+	string softwareVersion = conf.getString("softwareVersion", "pocohttpd/0.1.1");
 
 	Poco::ThreadPool::defaultPool().addCapacity(maxThreads);
 
 	Poco::Net::HTTPServerParams* pars = new Poco::Net::HTTPServerParams;
 	pars->setMaxQueued(maxQueued);
 	pars->setMaxThreads(maxThreads);
-	pars->setSoftwareVersion("pocohttpd/0.1.1");
+	pars->setSoftwareVersion(softwareVersion);
 
 	poco_information_f1(logger, "port: %hu", port);
 	poco_information_f1(logger, "maxQueued: %i", pars->getMaxQueued());
