@@ -5,8 +5,8 @@
  *      Author: serge78rus
  */
 
-#ifndef H_ONFO_H_
-#define H_INFO_H_
+#ifndef HTTP_HANDLERS_INFO_H_
+#define HTTP_HANDLERS_INFO_H_
 
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Logger.h>
@@ -31,4 +31,4 @@ inline InfoHandler::InfoHandler(Poco::Logger &reql, Poco::Logger &resl)
 
 } //namespace http
 
-#endif /* H_INFO_H_ */
+#endif /* HTTP_HANDLERS_INFO_H_ */

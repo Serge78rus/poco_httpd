@@ -5,8 +5,8 @@
  *      Author: serge78rus
  */
 
-#ifndef FACTORY_H_
-#define FACTORY_H_
+#ifndef HTTP_FACTORY_H_
+#define HTTP_FACTORY_H_
 
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
 #include <Poco/Net/HTTPServerResponse.h>
@@ -16,6 +16,8 @@
 #include "mime.h"
 
 namespace http {
+
+const std::string DEFAULT_ROOT = "wwwroot";
 
 class Conf;
 
@@ -41,4 +43,4 @@ private:
 
 } //namespace http
 
-#endif /* FACTORY_H_ */
+#endif /* HTTP_FACTORY_H_ */

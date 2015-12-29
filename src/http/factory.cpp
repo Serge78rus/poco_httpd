@@ -22,7 +22,7 @@ Factory::Factory(Conf &conf)
 		: logger(Poco::Logger::get("http.factory")),
 			reqLogger(Poco::Logger::get("http.req")),
 			resLogger(Poco::Logger::get("http.res")),
-			rootDir(conf.getString("root", "wwwroot")),
+			rootDir(conf.getString("root", DEFAULT_ROOT)),
 			err404page(conf.getString("error404", "")),
 			err500page(conf.getString("error500", "")),
 			err501page(conf.getString("error501", ""))

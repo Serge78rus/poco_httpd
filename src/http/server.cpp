@@ -35,10 +35,10 @@ void Server::initialize(Poco::Util::Application& app)
 	poco_trace(logger, "Server::initialize()");
 
 	Conf conf(app.config());
-	unsigned short port = (unsigned short)conf.getInt("port", 8888);
-	int maxQueued  = conf.getInt("maxQueued", 100);
-	int maxThreads = conf.getInt("maxThreads", 16);
-	string softwareVersion = conf.getString("softwareVersion", "pocohttpd/0.1.1");
+	unsigned short port = (unsigned short)conf.getInt("port", DEFAULT_PORT);
+	int maxQueued  = conf.getInt("maxQueued", DEFAULT_MAX_QUEUED);
+	int maxThreads = conf.getInt("maxThreads", DEFAULT_MAX_THREADS);
+	string softwareVersion = conf.getString("softwareVersion", DEFAULT_SOFTWARE_VERSION);
 
 	Poco::ThreadPool::defaultPool().addCapacity(maxThreads);
 

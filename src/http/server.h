@@ -5,14 +5,19 @@
  *      Author: serge78rus
  */
 
-#ifndef HTTPD_H_
-#define HTTPD_H_
+#ifndef HTTP_SERVER_H_
+#define HTTP_SERVER_H_
 
 #include <Poco/Util/Subsystem.h>
 #include <Poco/Net/HTTPServer.h>
 #include <Poco/Logger.h>
 
 namespace http {
+
+const int DEFAULT_PORT = 8888;
+const int DEFAULT_MAX_QUEUED = 100;
+const int DEFAULT_MAX_THREADS = 16;
+const std::string DEFAULT_SOFTWARE_VERSION = "pocohttpd/0.1.1";
 
 class Server : public Poco::Util::Subsystem {
 public:
@@ -28,4 +33,4 @@ private:
 
 } //namespace http
 
-#endif /* HTTPD_H_ */
+#endif /* HTTP_SERVER_H_ */
